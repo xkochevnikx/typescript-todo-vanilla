@@ -2,20 +2,21 @@ type ID = string | number;
 
 interface ITodo {
     userId: ID;
-    id: number;
+    id: ID;
     title: string;
     completed: boolean;
 }
 
 interface IUser {
     name: string;
-    id: number;
+    id: ID;
 }
 
 (function () {
     const todoList = document.getElementById('todo-list');
     const userSelect = document.getElementById('user-todo');
     const form = document.querySelector('form');
+
     let todos: ITodo[] = [];
     let users: IUser[] = [];
 
@@ -24,9 +25,7 @@ interface IUser {
 
     function getUserName(userId: ID) {
         const user = users.find((u) => u.id === userId);
-        if (user) {
-            return user.name;
-        }
+        return user?.name || '';
     }
 
     function printTodo({ id, userId, title, completed }: ITodo) {
@@ -61,19 +60,20 @@ interface IUser {
     }
 
     function removeTodo(todoId: ID) {
-        todos = todos.filter((todo) => todo.id !== todoId);
-
-        const todo = todoList?.querySelector(`[data-id="${todoId}"]`);
-        if (todo) {
-            todo.querySelector('input')?.removeEventListener(
-                'change',
-                handleTodoChange
-            );
-            todo.querySelector('.close')?.removeEventListener(
-                'click',
-                handleClose
-            );
-            todo.remove();
+        if (todoList) {
+            todos = todos.filter((todo) => todo.id !== todoId);
+            const todo = todoList.querySelector(`[data-id="${todoId}"]`);
+            if (todo) {
+                todo.querySelector('input')?.removeEventListener(
+                    'change',
+                    handleTodoChange
+                );
+                todo.querySelector('.close')?.removeEventListener(
+                    'click',
+                    handleClose
+                );
+                todo.remove();
+            }
         }
     }
 
@@ -82,12 +82,14 @@ interface IUser {
     }
 
     function initApp() {
-        Promise.all([getAllTodos(), getAllUsers()]).then((values) => {
-            [todos, users] = values;
+        Promise.all([getAllTodos(), getAllUsers()]).then(
+            (values: [ITodo[], IUser[]]) => {
+                [todos, users] = values;
 
-            todos.forEach((todo) => printTodo(todo));
-            users.forEach((user) => createUserOption(user));
-        });
+                todos.forEach((todo) => printTodo(todo));
+                users.forEach((user) => createUserOption(user));
+            }
+        );
     }
 
     function handleSubmit(event: Event) {
@@ -118,7 +120,6 @@ interface IUser {
         }
     }
 
-    // Async logic
     async function getAllTodos() {
         try {
             const response = await fetch(
