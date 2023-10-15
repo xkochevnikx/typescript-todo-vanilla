@@ -1,0 +1,14 @@
+{
+    "name": "ts-course-proj1-starter",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "npx tsc -w"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    }
+}
