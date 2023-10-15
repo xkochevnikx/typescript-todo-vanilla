@@ -101,6 +101,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 if (error instanceof Error) {
                     alertError(error);
                 }
+                return [];
             }
         });
     }
@@ -115,6 +116,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 if (error instanceof Error) {
                     alertError(error);
                 }
+                return [];
             }
         });
     }
