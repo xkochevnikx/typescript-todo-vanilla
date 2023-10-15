@@ -27,7 +27,10 @@
         "checkJs": false, // говорю не проверять файлы включённые выше
         "resolveJsonModule": true, // разрешить импорты из файлов с раширением json
         "jsx": "react-jsx", // если используем реакт для правильной обработки
-        "strict": true
+        "strict": true,
+        "noImplicitReturns": true, //заставляет всегда явно указвать return
+        "noFallthroughCasesInSwitch": true //азставляет не забывать break в switch
+        // "noUnusedLocals": true подсвечивает не используемые переменные
     },
     "include": ["src"], //вот тебе сущности - наблюдай
     "exclude": ["node_modules", "src/**/*.stories.*", "src/**/mock/*"] // за чем явно не нужно следить в рантайме и что не нужно компилировать в процессе сборки, перечислить в массиве
